@@ -2,26 +2,12 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
-import 'home.dart';
-import 'login.dart';
-
-void main() {
-  runApp(MaterialApp(
-    home: SplashScreen(),
-    routes: <String, WidgetBuilder>{
-      '/HomeScreen': (BuildContext context) => HomeScreen(),
-      '/SplashScreen': (BuildContext context) => SplashScreen(),
-      '/LoginScreen': (BuildContext context) => LoginScreen()
-    },
-  ));
-}
-
 class SplashScreen extends StatefulWidget {
   @override
-  SplashScreenState createState() => SplashScreenState();
+  SplashState createState() => SplashState();
 }
 
-class SplashScreenState extends State<SplashScreen> {
+class SplashState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
@@ -34,7 +20,7 @@ class SplashScreenState extends State<SplashScreen> {
   }
 
   void navigationPage() {
-    Navigator.of(context).pushReplacementNamed('/HomeScreen');
+    // Navigator.of(context).pushReplacementNamed('/HomeScreen'); // need to uncomment it navigate to next screen
   }
 
   @override
