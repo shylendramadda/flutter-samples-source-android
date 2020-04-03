@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:fluttersamples/code.dart';
-import 'package:fluttersamples/output.dart';
+import 'package:FlutterSamples/code.dart';
+import 'package:FlutterSamples/output.dart';
 
 import 'home.dart';
 
