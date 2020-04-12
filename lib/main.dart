@@ -47,3 +47,4 @@ class SplashScreenState extends State<SplashScreen> {
     );
   }
 }
+// Release version 1.0.0 in play store
