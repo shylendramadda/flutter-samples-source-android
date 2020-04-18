@@ -1,6 +1,6 @@
 import 'package:FlutterSamples/samples/appbar.dart';
 import 'package:FlutterSamples/samples/drawer.dart';
-import 'package:FlutterSamples/samples/gallary.dart';
+import 'package:FlutterSamples/samples/gallery.dart';
 import 'package:FlutterSamples/samples/homesample.dart';
 import 'package:FlutterSamples/samples/silverappbar.dart';
 import 'package:FlutterSamples/samples/splash.dart';

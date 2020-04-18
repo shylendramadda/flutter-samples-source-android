@@ -10,7 +10,7 @@ class GalleryState extends State<GalleryScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Gallary Demo"),
+        title: Text("Gallery Demo"),
       ),
       body: GridView.count(
         // Create a grid with 2 columns. If you change the scrollDirection to

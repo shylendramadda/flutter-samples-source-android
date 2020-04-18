@@ -12,7 +12,7 @@ class DropDownState extends State<DropDownScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("DropDown Button"),
+          title: Text("Dropdown Button"),
         ),
         body: Center(
             child: DropdownButton<String>(

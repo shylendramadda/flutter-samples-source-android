@@ -149,7 +149,7 @@ class ButtonsScreen extends StatelessWidget {
 
     """));
 
-    sampleEntries.add(Sample(12, "DropDown", """
+    sampleEntries.add(Sample(12, "Dropdown", """
     
     import 'package:flutter/material.dart';
 
@@ -284,7 +284,7 @@ class SnackBarScreen extends StatelessWidget {
 
     """));
 
-    sampleEntries.add(Sample(16, "Check Box", """
+    sampleEntries.add(Sample(16, "Checkbox", """
 
 import 'package:flutter/material.dart';
 

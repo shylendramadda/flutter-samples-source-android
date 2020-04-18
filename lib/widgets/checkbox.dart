@@ -17,7 +17,7 @@ class CheckBoxState extends State<CheckBoxScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text("Check Box Demo")),
+        appBar: AppBar(title: Text("Checkbox Demo")),
         body: SingleChildScrollView(
           child: Center(
             child: Column(
