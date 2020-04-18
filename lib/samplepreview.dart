@@ -2,7 +2,7 @@ import 'package:FlutterSamples/code.dart';
 import 'package:FlutterSamples/output.dart';
 import 'package:flutter/material.dart';
 
-import 'main/home.dart';
+import 'home.dart';
 
 // ignore: must_be_immutable
 class SamplePreviewScreen extends StatefulWidget {

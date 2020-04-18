@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'main/home.dart';
+import 'home.dart';
 
 class CodeWidget extends StatelessWidget {
   final Sample sample;

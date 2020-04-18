@@ -1,7 +1,7 @@
 import 'package:FlutterSamples/samplepreview.dart';
 import 'package:flutter/material.dart';
 
-import 'main/home.dart';
+import 'home.dart';
 
 class WidgetsScreen extends StatefulWidget {
   @override
@@ -13,7 +13,6 @@ class WidgetsState extends State<WidgetsScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     sampleEntries.add(Sample(15, "Text", """
 
 import 'package:flutter/material.dart';
@@ -363,7 +362,8 @@ class CheckboxScreen extends StatelessWidget {
     Navigator.push(
       context,
       MaterialPageRoute(
-          builder: (context) => SamplePreviewScreen(sample: sampleEntries[index])),
+          builder: (context) =>
+              SamplePreviewScreen(sample: sampleEntries[index])),
     );
   }
 }

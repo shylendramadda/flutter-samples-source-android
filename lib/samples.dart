@@ -1,7 +1,7 @@
 import 'package:FlutterSamples/samplepreview.dart';
 import 'package:flutter/material.dart';
 
-import 'main/home.dart';
+import 'home.dart';
 
 class SamplesScreen extends StatefulWidget {
   @override
@@ -702,7 +702,8 @@ class TabBarClass extends StatelessWidget {
     Navigator.push(
       context,
       MaterialPageRoute(
-          builder: (context) => SamplePreviewScreen(sample: sampleEntries[index])),
+          builder: (context) =>
+              SamplePreviewScreen(sample: sampleEntries[index])),
     );
   }
 }

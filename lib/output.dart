@@ -14,7 +14,7 @@ import 'package:FlutterSamples/widgets/snackbar.dart';
 import 'package:FlutterSamples/widgets/text.dart';
 import 'package:flutter/material.dart';
 
-import 'main/home.dart';
+import 'home.dart';
 import 'samples/bottomnav.dart';
 import 'samples/login.dart';
 
