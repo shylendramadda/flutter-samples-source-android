@@ -1,12 +1,14 @@
-import 'package:FlutterSamples/sample.dart';
+import 'package:FlutterSamples/samplepreview.dart';
 import 'package:flutter/material.dart';
 
-class HomeScreen extends StatefulWidget {
+import 'main/home.dart';
+
+class SamplesScreen extends StatefulWidget {
   @override
-  HomeScreenState createState() => new HomeScreenState();
+  SamplesState createState() => SamplesState();
 }
 
-class HomeScreenState extends State<HomeScreen> {
+class SamplesState extends State<SamplesScreen> {
   List<Sample> sampleEntries = List();
 
   @override
@@ -522,7 +524,7 @@ class AppBarScreen extends StatelessWidget {
     
     """));
 
-    sampleEntries.add(Sample(8, "BottomNavigation", """
+    sampleEntries.add(Sample(8, "Bottom Navigation", """
     
     import 'package:flutter/material.dart';
 
@@ -554,7 +556,7 @@ class BottomNavState extends State<BottomNavigationScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('BottomNavigationBar Sample'),
+        title: const Text('BottomNavigation Demo'),
       ),
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
@@ -682,63 +684,25 @@ class TabBarClass extends StatelessWidget {
 
     """));
 
-    return WillPopScope(
-        onWillPop: onBackPressed,
-        child: new Scaffold(
-            appBar: new AppBar(
-              title: new Text('Flutter Samples'),
-            ),
-            body: ListView.builder(
-                padding: const EdgeInsets.all(8),
-                itemCount: sampleEntries.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return Card(
-                      child: ListTile(
-                    title: Text('${sampleEntries[index].title}'),
-//              subtitle: Text('Sub title'),
-                    trailing: Icon(Icons.arrow_forward_ios),
-                    onTap: () => onTapped(index, context),
-                  ));
-                })));
+    return Scaffold(
+        body: ListView.builder(
+            padding: const EdgeInsets.all(8),
+            itemCount: sampleEntries.length,
+            itemBuilder: (BuildContext context, int index) {
+              return Card(
+                  child: ListTile(
+                title: Text('${sampleEntries[index].title}'),
+                trailing: Icon(Icons.arrow_forward_ios),
+                onTap: () => onTapped(index, context),
+              ));
+            }));
   }
 
   onTapped(int index, BuildContext context) {
     Navigator.push(
       context,
       MaterialPageRoute(
-          builder: (context) => SampleScreen(sample: sampleEntries[index])),
+          builder: (context) => SamplePreviewScreen(sample: sampleEntries[index])),
     );
   }
-
-  Future<bool> onBackPressed() {
-    return showDialog(
-          context: context,
-          builder: (context) => AlertDialog(
-            title: Text('Are you sure?'),
-            content: Text('Do you want to exit an App'),
-            actions: <Widget>[
-              GestureDetector(
-                child: FlatButton(
-                    child: Text("No"),
-                    onPressed: () => Navigator.of(context).pop(false)),
-              ),
-              SizedBox(height: 16),
-              GestureDetector(
-                child: FlatButton(
-                    child: Text("YES", style: TextStyle(color: Colors.grey)),
-                    onPressed: () => Navigator.of(context).pop(true)),
-              ),
-            ],
-          ),
-        ) ??
-        false;
-  }
-}
-
-class Sample {
-  final int id;
-  final String title;
-  final String sourceCode;
-
-  Sample(this.id, this.title, this.sourceCode);
 }

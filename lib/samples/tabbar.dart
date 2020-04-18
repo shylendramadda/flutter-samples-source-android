@@ -15,7 +15,7 @@ class TabBarClass extends StatelessWidget {
                 Tab(icon: Icon(Icons.directions_bike)),
               ],
             ),
-            title: Text('Tabs Demo'),
+            title: Text('Tab bar Demo'),
           ),
           body: TabBarView(
             children: [

@@ -1,16 +1,22 @@
-import 'package:FlutterSamples/appbar.dart';
-import 'package:FlutterSamples/drawer.dart';
-import 'package:FlutterSamples/gallary.dart';
-import 'package:FlutterSamples/silverappbar.dart';
-import 'package:FlutterSamples/splash.dart';
-import 'package:FlutterSamples/tabbar.dart';
-import 'package:FlutterSamples/todo.dart';
+import 'package:FlutterSamples/samples/appbar.dart';
+import 'package:FlutterSamples/samples/drawer.dart';
+import 'package:FlutterSamples/samples/gallary.dart';
+import 'package:FlutterSamples/samples/homesample.dart';
+import 'package:FlutterSamples/samples/silverappbar.dart';
+import 'package:FlutterSamples/samples/splash.dart';
+import 'package:FlutterSamples/samples/tabbar.dart';
+import 'package:FlutterSamples/samples/todo.dart';
+import 'package:FlutterSamples/widgets/buttons.dart';
+import 'package:FlutterSamples/widgets/checkbox.dart';
+import 'package:FlutterSamples/widgets/dropdown.dart';
+import 'package:FlutterSamples/widgets/popupmenu.dart';
+import 'package:FlutterSamples/widgets/snackbar.dart';
+import 'package:FlutterSamples/widgets/text.dart';
 import 'package:flutter/material.dart';
 
-import 'bottomnav.dart';
-import 'home.dart';
-import 'homesample.dart';
-import 'login.dart';
+import 'main/home.dart';
+import 'samples/bottomnav.dart';
+import 'samples/login.dart';
 
 class OutputWidget extends StatefulWidget {
   final Sample sample;
@@ -85,6 +91,36 @@ class OutputState extends State<OutputWidget> {
       case 10:
         {
           screenName = TabBarClass();
+        }
+        break;
+      case 11:
+        {
+          screenName = ButtonsScreen();
+        }
+        break;
+      case 12:
+        {
+          screenName = DropDownScreen();
+        }
+        break;
+      case 13:
+        {
+          screenName = PopupMenuScreen();
+        }
+        break;
+      case 14:
+        {
+          screenName = SnackBarScreen();
+        }
+        break;
+      case 15:
+        {
+          screenName = TextScreen();
+        }
+        break;
+      case 16:
+        {
+          screenName = CheckBoxScreen();
         }
         break;
     }

@@ -1,23 +1,24 @@
-import 'package:flutter/material.dart';
 import 'package:FlutterSamples/code.dart';
 import 'package:FlutterSamples/output.dart';
+import 'package:flutter/material.dart';
 
-import 'home.dart';
+import 'main/home.dart';
 
-class SampleScreen extends StatefulWidget {
+// ignore: must_be_immutable
+class SamplePreviewScreen extends StatefulWidget {
   final Sample sample;
   int selectedIndex = 0;
   TextStyle optionStyle = TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
 
-  SampleScreen({Key key, @required this.sample}) : super(key: key);
+  SamplePreviewScreen({Key key, @required this.sample}) : super(key: key);
 
   @override
-  State<SampleScreen> createState() {
-    return SampleScreenState();
+  State<SamplePreviewScreen> createState() {
+    return SamplePreviewScreenState();
   }
 }
 
-class SampleScreenState extends State<SampleScreen> {
+class SamplePreviewScreenState extends State<SamplePreviewScreen> {
   int currentIndex = 0;
 
   @override
