@@ -3,15 +3,13 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import 'home.dart';
-import 'login.dart';
 
 void main() {
   runApp(MaterialApp(
     home: SplashScreen(),
     routes: <String, WidgetBuilder>{
       '/HomeScreen': (BuildContext context) => HomeScreen(),
-      '/SplashScreen': (BuildContext context) => SplashScreen(),
-      '/LoginScreen': (BuildContext context) => LoginScreen()
+      '/SplashScreen': (BuildContext context) => SplashScreen()
     },
   ));
 }
@@ -47,4 +45,3 @@ class SplashScreenState extends State<SplashScreen> {
     );
   }
 }
-// Release version 1.0.0 in play store
