@@ -5,8 +5,7 @@ class TextScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(title: Text('Text Demo')),
-        body: SingleChildScrollView(
-            child: Center(
+        body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
@@ -51,6 +50,6 @@ class TextScreen extends StatelessWidget {
               )
             ],
           ),
-        )));
+        ));
   }
 }

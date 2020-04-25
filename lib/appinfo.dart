@@ -12,8 +12,12 @@ class AppInfoScreen extends StatelessWidget {
             children: <Widget>[
               Image.asset('assets/images/flutter_icon.png',
                   width: 150, height: 80),
-              Text('Flutter Samples \nVersion 1.0.1',
+              SizedBox(width: 50),
+              Text('Flutter Samples',
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+              SizedBox(width: 20),
+              Text('Version 1.0.3',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
               Padding(
                 padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
                 child: Text(

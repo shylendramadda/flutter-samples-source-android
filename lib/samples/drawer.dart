@@ -5,12 +5,12 @@ class DrawerScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Drawer Demo'),
+        title: Text('Drawer Demo'),
       ),
       drawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
-          children: const <Widget>[
+          children: <Widget>[
             DrawerHeader(
               decoration: BoxDecoration(
                 color: Colors.blue,
@@ -26,14 +26,23 @@ class DrawerScreen extends StatelessWidget {
             ListTile(
               leading: Icon(Icons.message),
               title: Text('Messages'),
+              onTap: () {
+                Navigator.pop(context);
+              },
             ),
             ListTile(
               leading: Icon(Icons.account_circle),
               title: Text('Profile'),
+              onTap: () {
+                Navigator.pop(context);
+              },
             ),
             ListTile(
               leading: Icon(Icons.settings),
               title: Text('Settings'),
+              onTap: () {
+                Navigator.pop(context);
+              },
             ),
           ],
         ),

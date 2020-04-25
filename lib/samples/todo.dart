@@ -11,7 +11,7 @@ class TodoState extends State<TodoScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Todo List")),
+      appBar: AppBar(title: Text("Todo List Demo")),
       body: createTodoList(),
       floatingActionButton: FloatingActionButton(
           onPressed: navigateToTodoScreen,

@@ -8,9 +8,14 @@ import 'package:FlutterSamples/samples/tabbar.dart';
 import 'package:FlutterSamples/samples/todo.dart';
 import 'package:FlutterSamples/widgets/buttons.dart';
 import 'package:FlutterSamples/widgets/checkbox.dart';
+import 'package:FlutterSamples/widgets/column.dart';
+import 'package:FlutterSamples/widgets/container.dart';
 import 'package:FlutterSamples/widgets/dropdown.dart';
+import 'package:FlutterSamples/widgets/materialapp.dart';
 import 'package:FlutterSamples/widgets/popupmenu.dart';
+import 'package:FlutterSamples/widgets/row.dart';
 import 'package:FlutterSamples/widgets/snackbar.dart';
+import 'package:FlutterSamples/widgets/stack.dart';
 import 'package:FlutterSamples/widgets/text.dart';
 import 'package:flutter/material.dart';
 
@@ -121,6 +126,31 @@ class OutputState extends State<OutputWidget> {
       case 16:
         {
           screenName = CheckBoxScreen();
+        }
+        break;
+      case 17:
+        {
+          screenName = RowScreen();
+        }
+        break;
+      case 18:
+        {
+          screenName = ColumnScreen();
+        }
+        break;
+      case 19:
+        {
+          screenName = StackScreen();
+        }
+        break;
+      case 20:
+        {
+          screenName = ContainerScreen();
+        }
+        break;
+      case 21:
+        {
+          screenName = MaterialAppScreen();
         }
         break;
     }

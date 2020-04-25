@@ -10,9 +10,127 @@ class SamplesScreen extends StatefulWidget {
 
 class SamplesState extends State<SamplesScreen> {
   List<Sample> sampleEntries = List();
+  List<Sample> filteredList = List();
+  TextEditingController searchSampleController = TextEditingController();
+  String searchText = "";
+  bool isShowSearch = false;
+
+  @override
+  void dispose() {
+    searchSampleController.dispose();
+    super.dispose();
+  }
+
+  @override
+  void initState() {
+    var samplesList = buildSampleEntries();
+    filteredList = samplesList;
+    searchSampleController.addListener(textListener);
+    super.initState();
+  }
+
+  void textListener() {
+    searchText = searchSampleController.text;
+  }
+
+  filterData(String input) {
+    setState(() {
+      filteredList = sampleEntries
+          .where((element) => (element.title
+              .toLowerCase()
+              .contains(input.trim().toLowerCase())))
+          .toList();
+    });
+  }
+
+  resetData() {
+    setState(() {
+      searchSampleController.text = "";
+      isShowSearch = !isShowSearch;
+      filteredList = sampleEntries;
+    });
+  }
+
+  onTapListItem(int index, BuildContext context) {
+    if (isShowSearch) {
+      resetData();
+    }
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) =>
+              SamplePreviewScreen(sample: sampleEntries[index])),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
+    return Scaffold(
+      body: Column(children: <Widget>[
+        Visibility(
+            visible: isShowSearch,
+            child: Padding(
+                padding: EdgeInsets.fromLTRB(10, 0, 10, 10),
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Icon(
+                      Icons.search,
+                      color: Colors.blue,
+                    ),
+                    Flexible(
+                        child: TextFormField(
+                            autofocus: true,
+                            decoration: InputDecoration(
+                                labelText: 'Search for sample...'),
+                            keyboardType: TextInputType.text,
+                            textInputAction: TextInputAction.search,
+                            controller: searchSampleController,
+                            onChanged: (input) => filterData(input))),
+                    IconButton(
+                        icon: Icon(
+                          Icons.clear,
+                          color: Colors.grey,
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            if (searchText.isNotEmpty) {
+                              searchSampleController.text = "";
+                              filteredList = sampleEntries;
+                            } else {
+                              isShowSearch = false;
+                            }
+                          });
+                        }),
+                  ],
+                ))),
+        Expanded(
+            child: ListView.builder(
+                padding: const EdgeInsets.all(8),
+                itemCount: filteredList.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return Card(
+                      child: ListTile(
+                    title: Text('${filteredList[index].title}'),
+                    trailing: Icon(Icons.arrow_forward_ios),
+                    onTap: () => onTapListItem(index, context),
+                  ));
+                }))
+      ]),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          resetData();
+        },
+        tooltip: 'Search Samples',
+        child: Icon(Icons.search),
+        backgroundColor: Colors.blue,
+      ),
+    );
+  }
+
+  List<Sample> buildSampleEntries() {
     sampleEntries.add(new Sample(1, "Splash Screen", """" 
     
     import 'dart:async';
@@ -165,22 +283,22 @@ class _State extends State<LoginScreen> {
   }
 } 
     """));
-    sampleEntries.add(Sample(3, "Todo List", """
+    sampleEntries.add(Sample(3, "Todo List Demo", """
     
     import 'package:flutter/material.dart';
 
 class TodoScreen extends StatefulWidget {
   @override
-  TodoScreenState createState() => TodoScreenState();
+  TodoState createState() => TodoState();
 }
 
-class TodoScreenState extends State<TodoScreen> {
+class TodoState extends State<TodoScreen> {
   List<String> todoItems = [];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Todo List")),
+      appBar: AppBar(title: Text("Todo List Demo")),
       body: createTodoList(),
       floatingActionButton: FloatingActionButton(
           onPressed: navigateToTodoScreen,
@@ -202,7 +320,7 @@ class TodoScreenState extends State<TodoScreen> {
           },
           decoration: InputDecoration(
               hintText: 'Write todo text',
-              contentPadding: const EdgeInsets.all(14.0)),
+              contentPadding: const EdgeInsets.all(14)),
         ),
       );
     }));
@@ -260,7 +378,6 @@ class TodoScreenState extends State<TodoScreen> {
 }
 
     """));
-
     sampleEntries.add(Sample(4, "Gallery", """ 
     
     import 'package:flutter/material.dart';
@@ -310,7 +427,6 @@ class GalleryState extends State<GalleryScreen> {
 }
     
     """));
-
     sampleEntries.add(Sample(5, "Home Screen", """
     
     import 'package:flutter/material.dart';
@@ -415,8 +531,8 @@ class HomeSample extends StatelessWidget {
 }
     
     """));
-
     sampleEntries.add(Sample(6, "Drawer", """
+    
     import 'package:flutter/material.dart';
 
 class DrawerScreen extends StatelessWidget {
@@ -424,12 +540,12 @@ class DrawerScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Drawer Demo'),
+        title: Text('Drawer Demo'),
       ),
       drawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
-          children: const <Widget>[
+          children: <Widget>[
             DrawerHeader(
               decoration: BoxDecoration(
                 color: Colors.blue,
@@ -445,14 +561,23 @@ class DrawerScreen extends StatelessWidget {
             ListTile(
               leading: Icon(Icons.message),
               title: Text('Messages'),
+              onTap: () {
+                Navigator.pop(context);
+              },
             ),
             ListTile(
               leading: Icon(Icons.account_circle),
               title: Text('Profile'),
+              onTap: () {
+                Navigator.pop(context);
+              },
             ),
             ListTile(
               leading: Icon(Icons.settings),
               title: Text('Settings'),
+              onTap: () {
+                Navigator.pop(context);
+              },
             ),
           ],
         ),
@@ -462,7 +587,6 @@ class DrawerScreen extends StatelessWidget {
 }
 
     """));
-
     sampleEntries.add(Sample(7, "AppBar", """
     
     import 'package:flutter/material.dart';
@@ -523,7 +647,6 @@ class AppBarScreen extends StatelessWidget {
 }
     
     """));
-
     sampleEntries.add(Sample(8, "Bottom Navigation", """
     
     import 'package:flutter/material.dart';
@@ -534,7 +657,7 @@ class BottomNavigationScreen extends StatefulWidget {
 }
 
 class BottomNavState extends State<BottomNavigationScreen> {
-  int _selectedIndex = 0;
+  var _selectedIndex = 0;
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static const List<Widget> _widgetOptions = <Widget>[
@@ -556,7 +679,7 @@ class BottomNavState extends State<BottomNavigationScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('BottomNavigation Demo'),
+        title: const Text('BottomNavigationBar Demo'),
       ),
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
@@ -591,7 +714,6 @@ class BottomNavState extends State<BottomNavigationScreen> {
 }
     
     """));
-
     sampleEntries.add(Sample(9, "Silver App Bar", """
     
     import 'package:flutter/material.dart';
@@ -600,7 +722,7 @@ class SliverAppBarScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Silver App Bar')),
+      appBar: AppBar(title: Text('Silver App Bar Demo')),
       body: CustomScrollView(
         slivers: <Widget>[
           const SliverAppBar(
@@ -622,7 +744,7 @@ class SliverAppBarScreen extends StatelessWidget {
                 return Container(
                   alignment: Alignment.center,
                   color: Colors.teal[100 * (index % 9)],
-                  child: Text('Grid Item'),
+                  child: Text('Grid Item index'),  // Add doller for index
                 );
               },
               childCount: 20,
@@ -635,7 +757,7 @@ class SliverAppBarScreen extends StatelessWidget {
                 return Container(
                   alignment: Alignment.center,
                   color: Colors.lightBlue[100 * (index % 9)],
-                  child: Text('List Item'),
+                  child: Text('List Item index'), // Add doller for index
                 );
               },
             ),
@@ -647,7 +769,6 @@ class SliverAppBarScreen extends StatelessWidget {
 }
 
     """));
-
     sampleEntries.add(Sample(10, "Tab Bar", """
     
     import 'package:flutter/material.dart';
@@ -683,27 +804,6 @@ class TabBarClass extends StatelessWidget {
 }
 
     """));
-
-    return Scaffold(
-        body: ListView.builder(
-            padding: const EdgeInsets.all(8),
-            itemCount: sampleEntries.length,
-            itemBuilder: (BuildContext context, int index) {
-              return Card(
-                  child: ListTile(
-                title: Text('${sampleEntries[index].title}'),
-                trailing: Icon(Icons.arrow_forward_ios),
-                onTap: () => onTapped(index, context),
-              ));
-            }));
-  }
-
-  onTapped(int index, BuildContext context) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-          builder: (context) =>
-              SamplePreviewScreen(sample: sampleEntries[index])),
-    );
+    return sampleEntries;
   }
 }
