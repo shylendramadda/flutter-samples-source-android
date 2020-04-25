@@ -1,4 +1,5 @@
 import 'package:FlutterSamples/samplepreview.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'home.dart';
@@ -9,11 +10,129 @@ class WidgetsScreen extends StatefulWidget {
 }
 
 class WidgetsState extends State<WidgetsScreen> {
-  List<Sample> sampleEntries = List();
+  List<Sample> widgetEntries = List();
+  List<Sample> filteredList = List();
+  TextEditingController searchWidgetController = TextEditingController();
+  String searchText = "";
+  bool isShowSearch = false;
+
+  @override
+  void dispose() {
+    searchWidgetController.dispose();
+    super.dispose();
+  }
+
+  @override
+  void initState() {
+    var widgetsList = buildWidgetEntries();
+    filteredList = widgetsList;
+    searchWidgetController.addListener(textListener);
+    super.initState();
+  }
+
+  void textListener() {
+    searchText = searchWidgetController.text;
+  }
+
+  filterData(String input) {
+    setState(() {
+      filteredList = widgetEntries
+          .where((element) => (element.title
+              .toLowerCase()
+              .contains(input.trim().toLowerCase())))
+          .toList();
+    });
+  }
+
+  resetData() {
+    setState(() {
+      searchWidgetController.text = "";
+      isShowSearch = !isShowSearch;
+      filteredList = widgetEntries;
+    });
+  }
+
+  onTapListItem(int index, BuildContext context) {
+    if (isShowSearch) {
+      resetData();
+    }
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) =>
+              SamplePreviewScreen(sample: filteredList[index])),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
-    sampleEntries.add(Sample(15, "Text", """
+    return Scaffold(
+      body: Column(children: <Widget>[
+        Visibility(
+            visible: isShowSearch,
+            child: Padding(
+                padding: EdgeInsets.fromLTRB(10, 0, 10, 10),
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Icon(
+                      Icons.search,
+                      color: Colors.blue,
+                    ),
+                    Flexible(
+                        child: TextFormField(
+                            autofocus: true,
+                            decoration: InputDecoration(
+                                labelText: 'Search for widget...'),
+                            keyboardType: TextInputType.text,
+                            textInputAction: TextInputAction.search,
+                            controller: searchWidgetController,
+                            onChanged: (input) => filterData(input))),
+                    IconButton(
+                        icon: Icon(
+                          Icons.clear,
+                          color: Colors.grey,
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            if (searchText.isNotEmpty) {
+                              searchWidgetController.text = "";
+                              filteredList = widgetEntries;
+                            } else {
+                              isShowSearch = false;
+                            }
+                          });
+                        }),
+                  ],
+                ))),
+        Expanded(
+            child: ListView.builder(
+                padding: const EdgeInsets.all(8),
+                itemCount: filteredList.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return Card(
+                      child: ListTile(
+                    title: Text('${filteredList[index].title}'),
+                    trailing: Icon(Icons.arrow_forward_ios),
+                    onTap: () => onTapListItem(index, context),
+                  ));
+                }))
+      ]),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          resetData();
+        },
+        tooltip: 'Search Widgets',
+        child: Icon(Icons.search),
+        backgroundColor: Colors.blue,
+      ),
+    );
+  }
+
+  List<Sample> buildWidgetEntries() {
+    widgetEntries.add(Sample(15, "Text", """
 
 import 'package:flutter/material.dart';
 
@@ -30,7 +149,7 @@ class TextScreen extends StatelessWidget {
               Text(
                 "This is a overflow text. It will show ellipsis at the end when the text reaches at the end of the screen.",
                 overflow: TextOverflow.ellipsis,
-                style: TextStyle(fontStyle: FontStyle.italic),
+                style: TextStyle(fontStyle: FontStyle.italic, fontSize: 20),
               ),
               RichText(
                 text: TextSpan(
@@ -38,7 +157,7 @@ class TextScreen extends StatelessWidget {
                   style: DefaultTextStyle.of(context).style,
                   children: <TextSpan>[
                     TextSpan(
-                        text: 'bold',
+                        text: ' bold',
                         style: TextStyle(fontWeight: FontWeight.bold)),
                     TextSpan(text: ' world!'),
                   ],
@@ -56,6 +175,14 @@ class TextScreen extends StatelessWidget {
                         style: TextStyle(fontWeight: FontWeight.bold)),
                   ],
                 ),
+              ),
+              Text(
+                'It is a strikethrough text',
+                style: TextStyle(decoration: TextDecoration.lineThrough),
+              ),
+              Text(
+                'It is a underlined text',
+                style: TextStyle(decoration: TextDecoration.underline),
               )
             ],
           ),
@@ -64,8 +191,7 @@ class TextScreen extends StatelessWidget {
 }
 
     """));
-
-    sampleEntries.add(Sample(11, "Button", """
+    widgetEntries.add(Sample(11, "Button", """
     
     import 'package:flutter/material.dart';
 
@@ -147,8 +273,7 @@ class ButtonsScreen extends StatelessWidget {
 }
 
     """));
-
-    sampleEntries.add(Sample(12, "Dropdown", """
+    widgetEntries.add(Sample(12, "Dropdown", """
     
     import 'package:flutter/material.dart';
 
@@ -164,7 +289,7 @@ class DropDownState extends State<DropDownScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("DropDown Button"),
+          title: Text("Dropdown Button"),
         ),
         body: Center(
             child: DropdownButton<String>(
@@ -194,8 +319,7 @@ class DropDownState extends State<DropDownScreen> {
 }
 
     """));
-
-    sampleEntries.add(Sample(13, "Popup Menu", """
+    widgetEntries.add(Sample(13, "Popup Menu", """
     
     import 'package:flutter/material.dart';
 
@@ -242,8 +366,7 @@ class PopupMenuScreen extends StatelessWidget {
 }
 
     """));
-
-    sampleEntries.add(Sample(14, "Snack Bar", """
+    widgetEntries.add(Sample(14, "Snack Bar", """
 
 import 'package:flutter/material.dart';
 
@@ -279,33 +402,37 @@ class SnackBarScreen extends StatelessWidget {
       duration: Duration(milliseconds: duration),
     ));
   }
-}    
+}
 
     """));
-
-    sampleEntries.add(Sample(16, "Checkbox", """
+    widgetEntries.add(Sample(16, "Checkbox", """
 
 import 'package:flutter/material.dart';
 
-class CheckboxScreen extends StatelessWidget {
+class CheckBoxScreen extends StatefulWidget {
+  @override
+  CheckBoxState createState() => CheckBoxState();
+}
+
+class CheckBoxState extends State<CheckBoxScreen> {
+  bool monVal = false;
+  bool tuVal = false;
+  bool wedVal = false;
+  bool thurVal = false;
+  bool friVal = false;
+  bool satVal = false;
+  bool sunVal = false;
+
   @override
   Widget build(BuildContext context) {
-    bool monVal = false;
-    bool tuVal = false;
-    bool wedVal = false;
-    bool thurVal = false;
-    bool friVal = false;
-    bool satVal = false;
-    bool sunVal = false;
-
     return Scaffold(
-        appBar: AppBar(title: Text("Check Box Demo")),
+        appBar: AppBar(title: Text("Checkbox Demo")),
         body: SingleChildScrollView(
           child: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Row(
+                Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     checkbox("Monday", monVal),
@@ -313,11 +440,6 @@ class CheckboxScreen extends StatelessWidget {
                     checkbox("Wednesday", wedVal),
                     checkbox("Thursday", thurVal),
                     checkbox("Friday", friVal),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
                     checkbox("Saturday", satVal),
                     checkbox("Sunday", sunVal),
                   ],
@@ -329,13 +451,39 @@ class CheckboxScreen extends StatelessWidget {
   }
 
   Widget checkbox(String title, bool boolValue) {
-    return Column(
+    return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        Text(title),
+        Text(title, style: TextStyle(fontWeight: FontWeight.bold)),
         Checkbox(
           value: boolValue,
-          onChanged: (bool value) {},
+          onChanged: (bool value) {
+            setState(() {
+              switch (title) {
+                case "Monday":
+                  monVal = value;
+                  break;
+                case "Tuesday":
+                  tuVal = value;
+                  break;
+                case "Wednesday":
+                  wedVal = value;
+                  break;
+                case "Thursday":
+                  thurVal = value;
+                  break;
+                case "Friday":
+                  friVal = value;
+                  break;
+                case "Saturday":
+                  satVal = value;
+                  break;
+                case "Sunday":
+                  sunVal = value;
+                  break;
+              }
+            });
+          },
         )
       ],
     );
@@ -343,27 +491,174 @@ class CheckboxScreen extends StatelessWidget {
 }
 
     """));
+    widgetEntries.add(Sample(17, "Row", """
 
+import 'package:flutter/material.dart';
+
+class RowScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
-        body: ListView.builder(
-            padding: const EdgeInsets.all(8),
-            itemCount: sampleEntries.length,
-            itemBuilder: (BuildContext context, int index) {
-              return Card(
-                  child: ListTile(
-                title: Text('${sampleEntries[index].title}'),
-                trailing: Icon(Icons.arrow_forward_ios),
-                onTap: () => onTapped(index, context),
-              ));
-            }));
-  }
-
-  onTapped(int index, BuildContext context) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-          builder: (context) =>
-              SamplePreviewScreen(sample: sampleEntries[index])),
+      appBar: AppBar(title: Text('Row Demo')),
+      body: Center(
+          child: Row(
+        children: <Widget>[
+          Expanded(
+              child: Container(
+            color: Colors.blue[50],
+            child: Text('Item1', textAlign: TextAlign.center),
+          )),
+          Expanded(
+              child: Container(
+            color: Colors.red[50],
+            child: Text('Item2', textAlign: TextAlign.center),
+          )),
+          Expanded(
+            child: Container(
+                color: Colors.green[50],
+                child: FittedBox(
+                  fit: BoxFit.contain, // otherwise the logo will be tiny
+                  child: const FlutterLogo(),
+                )),
+          ),
+        ],
+      )),
     );
+  }
+}
+
+    """));
+    widgetEntries.add(Sample(18, "Column", """
+
+import 'package:flutter/material.dart';
+
+class ColumnScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text('Column Demo')),
+      body: Center(
+          child: Column(
+        children: <Widget>[
+          Expanded(
+              child: Container(
+            color: Colors.blue[50],
+            child: Text('Item1', textAlign: TextAlign.center),
+          )),
+          Expanded(
+              child: Container(
+            color: Colors.red[50],
+            child: Text('Item2', textAlign: TextAlign.center),
+          )),
+          Expanded(
+            child: Container(
+                color: Colors.green[50],
+                child: FittedBox(
+                  fit: BoxFit.contain, // otherwise the logo will be tiny
+                  child: const FlutterLogo(),
+                )),
+          ),
+        ],
+      )),
+    );
+  }
+}
+
+    """));
+    widgetEntries.add(Sample(19, "Stack", """
+
+import 'package:flutter/material.dart';
+
+class StackScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text('Stack Demo')),
+      body: Stack(
+        children: <Widget>[
+          Container(
+            width: 400,
+            height: 400,
+            color: Colors.amberAccent,
+          ),
+          Container(
+            width: 200,
+            height: 200,
+            color: Colors.pink,
+          ),
+          Container(
+            width: 100,
+            height: 100,
+            color: Colors.red,
+          ),
+          Container(
+            width: 50,
+            height: 50,
+            color: Colors.green,
+          ),
+          Container(
+            width: 20,
+            height: 20,
+            color: Colors.blue,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+    """));
+    widgetEntries.add(Sample(20, "Container", """
+
+import 'package:flutter/material.dart';
+
+class ContainerScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Container Demo'),
+      ),
+      body: Center(
+        child: Container(
+          margin: const EdgeInsets.all(10.0),
+          color: Colors.amber[600],
+          width: 80.0,
+          height: 80.0,
+        ),
+      ),
+    );
+  }
+}
+
+    """));
+    widgetEntries.add(Sample(21, "MaterialApp", """
+
+import 'package:flutter/material.dart';
+
+class MaterialAppScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text('MaterialApp Demo'),
+        ),
+        body: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Text('This is a sample text to display in a material app'
+                'The text can wrap based on the screen width'
+                'This is implemented by using Material app.'),
+          ),
+        ),
+      ),
+      debugShowCheckedModeBanner: false,
+    );
+  }
+}
+
+    """));
+    return widgetEntries;
   }
 }

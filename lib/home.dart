@@ -32,7 +32,7 @@ class HomeScreenState extends State<HomeScreen> {
                   );*/
                   Share.share(
                       'Check out the app Flutter Samples at https://play.google.com/store/apps/details?id=com.geeklabs.fluttersamples '
-                          'Where you can learn Flutter language which supports Android, iOS and Web with source code and output preview too.',
+                      '\nWhere you can learn Flutter language which supports Android, iOS and Web with source code and output preview too.',
                       subject: 'Flutter Samples Android app');
                 },
               ),
