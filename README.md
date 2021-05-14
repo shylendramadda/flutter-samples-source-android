@@ -7,7 +7,12 @@ In this repository you can find the flutter basic samples along with source code
 
 ## Why Flutter:
 
-One code with 3 apps.
+One code with 3 apps:
+1. Android
+2. iOS 
+3. Web 
+
+Features:
 
 1. Fast Development
 2. Expressive and Flexible UI
